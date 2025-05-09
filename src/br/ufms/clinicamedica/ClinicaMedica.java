@@ -1,5 +1,6 @@
 package br.ufms.clinicamedica;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ public class ClinicaMedica {
     private final List<Medico> medicos;
     private final List<Secretario> secretarios;
     private final List<Paciente> pacientes;
+    private final List<Consulta> consultas;// eu adicionei essa lista para guardar as consultas
 
     public ClinicaMedica(String nome, String cnpj) {
         this.nome = nome;
@@ -21,6 +23,7 @@ public class ClinicaMedica {
         this.medicos = new ArrayList<Medico>();
         this.secretarios = new ArrayList<>();
         this.pacientes = new ArrayList<>();
+        this.consultas = new ArrayList<>();// faz par com a  linha 17
     }
 
     // Implemente aqui os métodos que você considerar necessário para que o sistema
@@ -38,5 +41,20 @@ public class ClinicaMedica {
         Paciente paciente = new Paciente(nome, cpf, endereco, telefone, dataNascimento);
         pacientes.add(paciente);
         return paciente;
+    }
+
+    //Método para criar uma consulta
+    public Consulta criarConsulta(Medico medico, Paciente paciente, String sintomas, LocalDateTime dataHora, double valor) {
+        Consulta consulta = new Consulta(medico, paciente, sintomas, dataHora, valor);
+        consultas.add(consulta);
+        return consulta;
+    }
+    public Medico buscarMedicoPorNome(String nome) {
+        for (Medico medico : medicos) {
+            if (medico.getNome().equalsIgnoreCase(nome)) { // Ignora maiúsculas e minúsculas
+                return medico;
+            }
+        }
+        return null; // Retorna null se não encontrar
     }
 }
