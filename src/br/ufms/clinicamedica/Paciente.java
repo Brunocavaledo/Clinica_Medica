@@ -18,6 +18,11 @@ public class Paciente {
         this.telefone = telefone;
         this.dataNascimento = dataNascimento;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
     @Override
     public String toString() {// esse método que descobri é bom pra eu conseguir ver os dados dentro de um objeto, pra fins de teste mesmo.
         return "Paciente{" +

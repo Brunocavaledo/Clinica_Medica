@@ -32,7 +32,7 @@ public class Consulta {
                 "codigo=" + codigo + '\'' +
                 "médico='" + medico.getNome() + '\'' +
                 ", sintomas='" + sintomas + '\'' +
-                ", paciente=" + paciente + '\'' +
+                ", paciente=" + paciente.getNome() + '\'' +
                 ", dataHora='" + dataHora + '\'' +
                 ", valor=" + valor +
                 '}';
