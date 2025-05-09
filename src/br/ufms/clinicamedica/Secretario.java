@@ -177,4 +177,14 @@ public class Secretario {
         }
         return cpf;
     }
+    @Override
+    public String toString() {// esse método que descobri é bom pra eu conseguir ver os dados dentro de um objeto, pra fins de teste mesmo.
+        return "Secretário{" +
+                "nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", endereco=" + endereco +
+                ", telefone='" + telefone + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                '}';
+    }
 }

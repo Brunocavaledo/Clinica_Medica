@@ -74,4 +74,16 @@ public class Endereco {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+    @Override
+    public String toString() {// esse método que descobri é bom pra eu conseguir ver os dados dentro de um objeto, pra fins de teste mesmo.
+        return "Endereco{" +
+                "logradouro='" + logradouro + '\'' +
+                ", numero=" + numero +
+                ", complemento='" + complemento + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", cep='" + cep + '\'' +
+                ", cidade='" + cidade + '\'' +
+                ", estado=" + estado +
+                '}';
+    }
 }

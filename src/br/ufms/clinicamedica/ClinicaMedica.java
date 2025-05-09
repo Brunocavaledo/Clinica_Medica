@@ -39,18 +39,4 @@ public class ClinicaMedica {
         pacientes.add(paciente);
         return paciente;
     }
-
-    //  método de teste pra puxar os nomes pra ver o que tem na lista médicos.
-    public void listarMedicos() {
-        for (Medico medico : medicos) {
-            System.out.println("Médico: " + medico.getNome());
-        }
-    }
-
-    //  método de teste pra puxar os nomes pra ver o que tem na lista pacientes.
-    public void listarPacientes() {
-        for (Paciente paciente : pacientes) {
-            System.out.println("Paciente: " + paciente.getNome());
-        }
-    }
 }
