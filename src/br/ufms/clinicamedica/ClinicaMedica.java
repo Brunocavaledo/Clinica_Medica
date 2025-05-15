@@ -23,7 +23,7 @@ public class ClinicaMedica {
         this.medicos = new ArrayList<Medico>();
         this.secretarios = new ArrayList<>();
         this.pacientes = new ArrayList<>();
-        this.consultas = new ArrayList<>();// faz par com a  linha 17
+        this.consultas = new ArrayList<>();// faz par com a linha 17
     }
 
     // Implemente aqui os métodos que você considerar necessário para que o sistema
@@ -34,6 +34,10 @@ public class ClinicaMedica {
         Medico medico = new Medico(nome, cpf, endereco, telefone, dataNascimento, crm);
         medicos.add(medico);
         return medico;
+    }
+
+    public void adicionarMedico(Medico medico) {
+        medicos.add(medico);
     }
 
     // Método para criar e adicionar um paciente à clínica

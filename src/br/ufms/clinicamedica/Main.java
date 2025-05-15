@@ -15,10 +15,8 @@ public class Main {
                     LocalDate.of(1988, 12, 8),
                     LocalDate.now(), 30000
             );
-
+            //Criando uma clínica
             ClinicaMedica clinica = new ClinicaMedica("Clínica Universitária", "52.223.432.0001-65");
-            // Implemente seus testes aqui...
-            // Experimente cadastrar um secretário, médico, paciente, agendar uma consulta...
 
             // Criando um endereço pro médico 1
             Endereco enderecoMedico = new Endereco(); // Criamos o objeto vazio
@@ -28,9 +26,10 @@ public class Main {
             enderecoMedico.setBairro("Jardim América");
             enderecoMedico.setCep("79400-000");
             enderecoMedico.setCidade("Coxim");
-            enderecoMedico.setEstado(Estado.MS);
+            enderecoMedico.setEstado("MS");
 
-            Medico medico = clinica.criarMedico(
+            //Criando o médico 1
+            Medico medico = new Medico(
                     "Dra Nathalie Cavalcante",
                     "03281723160",
                     enderecoMedico, // Agora passamos o objeto Endereco completo
@@ -38,6 +37,8 @@ public class Main {
                     LocalDate.of(1988, 11, 01),
                     "178254-5"
             );
+
+            clinica.adicionarMedico(medico);
 
             // Criando um endereço pro médico 2
             Endereco enderecoMedico2 = new Endereco(); // Criamos o objeto vazio
@@ -47,9 +48,11 @@ public class Main {
             enderecoMedico2.setBairro("Vila Bela");
             enderecoMedico2.setCep("79400-000");
             enderecoMedico2.setCidade("Coxim");
-            enderecoMedico2.setEstado(Estado.MS);
+            enderecoMedico2.setEstado("MS");  // Agora passa a sigla como String
 
-            Medico medico2 = clinica.criarMedico(
+
+            //Criando o médico 2
+            Medico medico2 = new Medico(
                     "Dr Pimpolho",
                     "46835645059",
                     enderecoMedico2, // Agora passamos o objeto Endereco completo
@@ -67,7 +70,8 @@ public class Main {
             enderecoPaciente.setBairro("Jardim Empamonado");
             enderecoPaciente.setCep("79400-000");
             enderecoPaciente.setCidade("Coxim");
-            enderecoPaciente.setEstado(Estado.MS);
+            enderecoPaciente.setEstado("MS");  // Passa a sigla como String por causa do validador de Estados que criei
+
 
             Paciente paciente = clinica.criarPaciente(
                     "Bruno Cavalcante",
@@ -78,7 +82,7 @@ public class Main {
             );
 
             // Criando uma consulta:
-            Medico medicoSelecionado = clinica.buscarMedicoPorNome("Dra Nathalie Cavalcante");
+            Medico medico1Selecionado = clinica.buscarMedicoPorNome("Dra Nathalie Cavalcante");
             Consulta consulta = clinica.criarConsulta(
                     medico,
                     paciente,
@@ -87,11 +91,23 @@ public class Main {
                     450.00
             );
 
+            // Criando uma segunda consulta com medico 2:
+            Medico medico2Selecionado = clinica.buscarMedicoPorNome("Dr Pimpolho");
+            Consulta consulta2 = clinica.criarConsulta(
+                    medico,
+                    paciente,
+                    "Dor do ombro esquerdo",
+                    LocalDateTime.of(2025, 6, 18, 10, 30),
+                    410.00
+            );
+
             // Aqui é um teste que imprime tudo que foi salvo no console, para confirmar que deu certo a criação dos objetos e seus atributos.
             System.out.println(medico);
+            System.out.println(medico2);
             System.out.println(paciente);
             System.out.println(secretario);
             System.out.println(consulta);
+            System.out.println(consulta2);
 
 
         } catch (Exception ex) {

@@ -71,8 +71,8 @@ public class Endereco {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setEstado(String sigla) {
+        this.estado = Estado.fromSigla(sigla);  // Valida a sigla antes de definir o estado
     }
     @Override
     public String toString() {// esse método que descobri é bom pra eu conseguir ver os dados dentro de um objeto, pra fins de teste mesmo.
