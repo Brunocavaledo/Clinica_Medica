@@ -45,7 +45,7 @@ public class Secretario {
         setDataIngresso(dataIngresso);
         setSalario(salario);
 
-        // Por ser final, este atributo não tem método set, e deve ser inicializado no construtor
+        // Isso garante que o cpf passará pelo validador
         this.cpf = validarCPF(cpf);
     }
 
@@ -66,7 +66,7 @@ public class Secretario {
             throw new IllegalArgumentException("O nome não pode ser nulo");
         }
         nome = nome.trim(); // elimina espaços adicionais no início ou final da string
-        if (nome.isEmpty()) {
+        if (nome.isBlank()) {
             throw new IllegalArgumentException("O nome pode ser em branco");
         } else if (!nome.matches("^[A-Za-zÀ-ÖØ-öø-ÿ'\\-\\s]+$")) {
             throw new IllegalArgumentException("O nome possui caracteres inválidos: " + nome);
@@ -84,7 +84,15 @@ public class Secretario {
      * @return novo CPF
      */
     public String getCpf() {
-        return cpf;
+        return cpf; // Retorna o CPF sem máscara
+    }
+
+    public String getCpfFormatado() {
+        // Aplica a máscara  de 3 em 3 dígitos e antes do final, de 2 dígitos: XXX.XXX.XXX-XX, e retorna.
+        return cpf.substring(0, 3) + "." +
+                cpf.substring(3, 6) + "." +
+                cpf.substring(6, 9) + "-" +
+                cpf.substring(9, 11);
     }
 
     public Endereco getEndereco() {
@@ -100,9 +108,9 @@ public class Secretario {
     }
 
     public void setTelefone(String telefone) {
-        telefone = telefone != null ? telefone.trim() : null;
-        if (telefone != null && !telefone.matches("^(\\d{2}9\\d{8}|\\d{2}[1-8]\\d{7})$")) {
-            throw new IllegalArgumentException("Telefone inválido. Informe somente dígitos (com DDD)");
+        telefone = telefone != null ? telefone.trim() : null;// Se não for nulo passa no trim pra tirar eventuais espaços nas pontas
+        if (telefone != null && !telefone.matches("^(\\d{2}9\\d{8}|\\d{2}[1-8]\\d{7})$")) { //Passa no regex
+            throw new IllegalArgumentException("Telefone inválido. Informe somente dígitos (com DDD)"); //Deu B.O. ? Lança excessão.
         }
         this.telefone = telefone;
     }
@@ -111,7 +119,7 @@ public class Secretario {
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) { // Validador de data de nascimento.
         if (dataNascimento != null) {
             if (dataNascimento.isBefore(LocalDate.now().minusYears(150)) ||
                     dataNascimento.isAfter(LocalDate.now())) {
@@ -144,13 +152,14 @@ public class Secretario {
         return salario;
     }
 
-    public void setSalario(double salario) {
+    public void setSalario(double salario) { // Validador de Salário
         if (salario < 0) {
             throw new IllegalArgumentException("O salário não pode ser negativo");
         }
         this.salario = salario;
     }
 
+    //Método de Validador de CPF's:
     private String validarCPF(String cpf) {
         if (cpf == null) {
             throw new IllegalArgumentException("CPF nulo");

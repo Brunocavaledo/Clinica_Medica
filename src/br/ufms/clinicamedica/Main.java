@@ -16,7 +16,7 @@ public class Main {
                     LocalDate.now(), 30000
             );
             //Criando uma clínica
-            ClinicaMedica clinica = new ClinicaMedica("Clínica Universitária", "52.223.432.0001-65");
+            ClinicaMedica clinica = new ClinicaMedica("Clínica Universitária", "52.223.432/0001-65");
 
             // Criando um endereço pro médico 1
             Endereco enderecoMedico = new Endereco(); // Criamos o objeto vazio
@@ -35,7 +35,7 @@ public class Main {
                     enderecoMedico, // Agora passamos o objeto Endereco completo
                     "67999095242",
                     LocalDate.of(1988, 11, 01),
-                    "178254-5"
+                    "123456-MS"
             );
 
             clinica.adicionarMedico(medico);
@@ -58,7 +58,7 @@ public class Main {
                     enderecoMedico2, // Agora passamos o objeto Endereco completo
                     "67999586352",
                     LocalDate.of(1990, 10, 15),
-                    "20514-5"
+                    "20514-MT"
             );
 
 

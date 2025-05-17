@@ -15,7 +15,7 @@ public class Medico {
     public Medico(String nome, String cpf, Endereco endereco, String telefone, LocalDate dataNascimento, String crm) {
         // este construtor chama o construtor abaixo para concentrar as inicializações em um mesmo lugar
         this(nome, cpf, endereco, telefone, dataNascimento);
-        this.crm = crm; //adiciona crm sem validação
+        setCrm(crm); //adiciona crm sem validação
     }
 
     public Medico(String nome, String cpf, Endereco endereco, String telefone, LocalDate dataNascimento) {
@@ -25,7 +25,7 @@ public class Medico {
         setTelefone(telefone);
         setDataNascimento(dataNascimento);
 
-        this.cpf = validarCPF(cpf);
+        this.cpf = validarCPF(cpf); // garante que o cpf passará pelo validador
     }
 
     public String getNome() {
@@ -38,7 +38,7 @@ public class Medico {
             throw new IllegalArgumentException("O nome não pode ser nulo");
         }
         nome = nome.trim(); // Elimina espaços adicionais no início ou final da string
-        if (nome.isEmpty()) { // Não pode estar vazio
+        if (nome.isBlank()) { // Não pode estar vazio
             throw new IllegalArgumentException("O nome pode ser em branco");
         } else if (!nome.matches("^[A-Za-zÀ-ÖØ-öø-ÿ'\\-\\s]+$")) { // Passa por um regex
             throw new IllegalArgumentException("O nome possui caracteres inválidos: " + nome);
@@ -51,7 +51,15 @@ public class Medico {
     }
 
     public String getCpf() {
-        return cpf;
+        return cpf; // Retorna o CPF sem máscara
+    }
+
+    public String getCpfFormatado() {
+        // Aplica a máscara  de 3 em 3 dígitos e antes do final, de 2 dígitos: XXX.XXX.XXX-XX, e retorna.
+        return cpf.substring(0, 3) + "." +
+                cpf.substring(3, 6) + "." +
+                cpf.substring(6, 9) + "-" +
+                cpf.substring(9, 11);
     }
 
     public Endereco getEndereco() {
@@ -92,12 +100,12 @@ public class Medico {
         this.dataNascimento = dataNascimento;
     }
 
-    //Validador de CPFs
+    //Método de Validador de CPF's:
     private String validarCPF(String cpf) {
-        if (cpf == null) { //Nao pode ser nulo
+        if (cpf == null || cpf.isBlank()) { //Nao pode ser nulo nem vazio
             throw new IllegalArgumentException("CPF nulo");
         }
-        cpf = cpf.trim();
+        cpf = cpf.trim(); //Tira os espaços nas pontas
         if (!cpf.matches("\\d{11}") || cpf.chars().distinct().count() == 1) { // Tem que ter os 11 caracteres
             throw new IllegalArgumentException("CPF inválido");
         }
@@ -120,9 +128,26 @@ public class Medico {
         return cpf;
     }
 
-    //Método de adicionar o CRM sem precisa validar:
+    //Método de adicionar o CRM e validar:
     public void setCrm(String crm) {
-        this.crm = crm;  // Sem validação, apenas armazena o valor
+
+        if (crm == null || crm.isBlank()) { //Nao pode ser nulo
+            throw new IllegalArgumentException("CRM inválido. O formato correto é: ######-AA");
+        }
+
+        crm = crm.replaceAll("\\s+", "");  // Remove todos os espaços antes da validação
+        if (!crm.matches("^\\d{1,6}-[A-Za-z]{2}$")) { // Tem que ter de 1 a 6 dígitos + o separador "-" + a sigla do estado, tipo ######-AA.
+            throw new IllegalArgumentException("CRM inválido. O formato correto é: ######-AA");
+        }
+
+        String siglaEstado = crm.split("-")[1].toUpperCase();  // Ajusta sigla para maiúsculas e extrai ela pra verificar se esta certa
+
+        try {
+            Estado.fromSigla(siglaEstado); // Valida se a sigla pertence ao Enum Estado, se lançar algo tipo 123456-XX ele acusa erro
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("CRM inválido. Estado '" + siglaEstado + "' não existe.");
+        }
+        this.crm = crm.split("-")[0] + "-" + siglaEstado;  // Guarda a versão padronizada
     }
 
     public String getCrm() {

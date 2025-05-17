@@ -36,7 +36,7 @@ public class Paciente {
             throw new IllegalArgumentException("O nome não pode ser nulo");
         }
         nome = nome.trim(); // Elimina espaços adicionais no início ou final da string
-        if (nome.isEmpty()) { // Não pode estar vazio
+        if (nome.isBlank()) { // Não pode estar vazio
             throw new IllegalArgumentException("O nome pode ser em branco");
         } else if (!nome.matches("^[A-Za-zÀ-ÖØ-öø-ÿ'\\-\\s]+$")) { // Passa por um regex
             throw new IllegalArgumentException("O nome possui caracteres inválidos: " + nome);
@@ -49,7 +49,15 @@ public class Paciente {
     }
 
     public String getCpf() {
-        return cpf;
+        return cpf; // Retorna o CPF sem máscara
+    }
+
+    public String getCpfFormatado() {
+        // Aplica a máscara  de 3 em 3 dígitos e antes do final, de 2 dígitos: XXX.XXX.XXX-XX, e retorna.
+        return cpf.substring(0, 3) + "." +
+                cpf.substring(3, 6) + "." +
+                cpf.substring(6, 9) + "-" +
+                cpf.substring(9, 11);
     }
 
     public Endereco getEndereco() {
@@ -90,7 +98,7 @@ public class Paciente {
         this.dataNascimento = dataNascimento;
     }
 
-    //Validador de CPFs
+    //Método de Validador de CPF's:
     private String validarCPF(String cpf) {
         if (cpf == null) { //Nao pode ser nulo
             throw new IllegalArgumentException("CPF nulo");
